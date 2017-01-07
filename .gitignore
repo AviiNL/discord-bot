@@ -48,3 +48,6 @@ jspm_packages
 
 # configuration file
 config.json
+
+# intellij project configration
+.idea
