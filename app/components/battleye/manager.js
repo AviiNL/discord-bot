@@ -67,7 +67,7 @@ class BEManager extends EventEmitter {
     }
 
     add(server) {
-        if (!this.get(server)) {
+        if (this.get(server)) {
             return false;
         }
 
@@ -82,7 +82,10 @@ class BEManager extends EventEmitter {
         }
 
         s.logout();
-        this.servers[server.guildid].remove(s);
+        var i = this.servers[server.guildid].indexOf(s);
+        if(i !== -1) {
+            this.servers[server.guildid].splice(i, 1);
+        }
     }
 
 }
