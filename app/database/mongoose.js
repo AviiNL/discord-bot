@@ -4,7 +4,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 var MONGO_DB;
 var DOCKER_DB = process.env.DB_PORT;
 if (DOCKER_DB) {
-    MONGO_DB = DOCKER_DB.replace('tcp', 'mongodb') + '/arma3rcon';
+    MONGO_DB = DOCKER_DB.replace('tcp', 'mongodb') + '/discord';
 } else {
     MONGO_DB = process.env.MONGODB;
 }

@@ -20,7 +20,7 @@ module.exports = class extends Command {
                         console.error(err);
                     }
                     if (!permissions) {
-                        console.log("No permissions");
+                        console.log("No permissions" || permissions.length === 0);
                     }
                     console.log("User permissions", permissions);
                 });
@@ -29,7 +29,7 @@ module.exports = class extends Command {
                     if (err) {
                         console.error(err);
                     }
-                    if (!permissions) {
+                    if (!permissions || permissions.length === 0) {
                         console.log("No permissions");
                     }
                     console.log("Roles permissions", permissions);
@@ -64,7 +64,7 @@ module.exports = class extends Command {
                 if ('role' === type) {
                     let group;
                     if (false !== (group = discord.findRole(this.guild, name))) {
-                        Role.findOne({'roleid': group.id}, (err, role) => {
+                        Role.findOne({'guildid': this.guild.id, 'roleid': group.id}, (err, role) => {
                             if (err) {
                                 return console.error(err);
                             }
@@ -111,7 +111,7 @@ module.exports = class extends Command {
                 if ('role' === type) {
                     let group;
                     if (false !== (group = discord.findRole(this.guild, name))) {
-                        Role.findOne({'roleid': group.id}, (err, role) => {
+                        Role.findOne({'guildid': this.guild.id, 'roleid': group.id}, (err, role) => {
                             if (err) {
                                 return console.error(err);
                             }
@@ -130,14 +130,12 @@ module.exports = class extends Command {
                 }
                 break;
             case 'purge':
-                User.remove({}, function(err,removed) {
-
-                });
-                Role.remove({}, function(err,removed) {
-
-                });
+                User.remove({guildid: this.guild.id}).exec();
+                Role.remove({guildid: this.guild.id}).exec();
                 break;
-            case 'can':
+            case 'clean':
+                // remove all user permissions of users that are no longer in this guild
+                // remove all role permissions of roles that are no longer in this guild
 
                 break;
         }
