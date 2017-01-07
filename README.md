@@ -1,3 +1,7 @@
+### Checkout [barebone](https://github.com/AviiNL/discord-bot/tree/barebone) tag to get a clean project
+
+---
+
 # Discord Bot Commands Framework
 
 Basic useful feature list:
