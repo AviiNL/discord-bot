@@ -1,0 +1,20 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "battle-node": "^0.1.2",
+    "discord.js": "^11.0.0",
+    "keypress": "^0.2.1",
+    "mongoose": "^4.7.6",
+    "mongoose-unique-validator": "^1.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
