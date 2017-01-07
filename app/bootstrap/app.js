@@ -7,6 +7,7 @@ const config = require('./../config.json');
 const components = [
     "discord",
     "discord/commandListener",
+    "battleye/manager"
 ];
 
 let loaded = [];

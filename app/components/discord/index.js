@@ -30,10 +30,15 @@ class Bot extends EventEmitter {
     }
 
     say(guild, channel, message) {
-        let _guild   = this.client.guilds.find((_guild) => _guild.id === guild);
-        let _channel = _guild.channels.find((_channel) => _channel.id === channel);
-        if (_channel) {
-            _channel.sendMessage(message);
+        if(typeof guild === 'string') {
+            guild = this.client.guilds.find((_guild) => _guild.id === guild);
+        }
+        if(typeof channel === "string") {
+            channel = guild.channels.find((_channel) => _channel.id === channel);
+        }
+
+        if (channel) {
+            channel.sendMessage(message);
         }
     }
 
