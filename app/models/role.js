@@ -8,7 +8,6 @@ var RoleSchema = new mongoose.Schema({
     },
     roleid:   {
         type:     String,
-        unique:   true,
         required: true
     },
     commands: {

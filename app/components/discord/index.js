@@ -57,6 +57,10 @@ class Bot extends EventEmitter {
         return roles[0];
     }
 
+    findRoleByID(guild, roleid) {
+        return guild.roles.get(roleid);
+    }
+
     findMember(guild, name) {
         let members = [];
         guild.members.forEach((member) => {
@@ -70,6 +74,10 @@ class Bot extends EventEmitter {
         }
 
         return members[0];
+    }
+
+    findMemberByID(guild, userid) {
+        return guild.members.get(userid);
     }
 }
 

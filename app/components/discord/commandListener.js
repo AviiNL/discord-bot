@@ -26,11 +26,12 @@ discord.on("message", (guild, channel, message) => {
 
         try {
             let func = require('./commands/' + command);
+            let cmd = new func(message.guild, message.channel, message.member);
 
-            let last = args.splice(func.length - 1).join(" ");
+            let last = args.splice(cmd.run.length - 1).join(" ");
+
             args.push(last);
 
-            let cmd = new func(message.guild, message.channel, message.member);
             cmd.run.apply(cmd, args);
 
         } catch (e) {
@@ -50,7 +51,10 @@ function authorize(message, command, cb) {
 
     User.findOne({guildid: message.guild.id, userid: message.member.id})
         .then((user) => {
-            var roleFinder = Role.findOne({guildid: message.guild.id, roleid: {"$in": message.member.roles.keyArray()}});
+            var roleFinder = Role.findOne({
+                guildid: message.guild.id,
+                roleid:  {"$in": message.member.roles.keyArray()}
+            });
 
             if (!user) {
                 return roleFinder;
@@ -68,25 +72,25 @@ function authorize(message, command, cb) {
             cb(true);
             return true;
         }).then((role) => {
-            if (typeof role !== "object") {
-                return; // we got a bool back already, don't bother
-            }
+        if (typeof role !== "object") {
+            return; // we got a bool back already, don't bother
+        }
 
-            if(!role) {
-                cb(false);
-                return false;
-            }
+        if (!role) {
+            cb(false);
+            return false;
+        }
 
-            if (role.commands.length > 0) {
-                let has = (role.commands.indexOf(command) !== -1);
-                cb(has);
-                return has;
-            }
+        if (role.commands.length > 0) {
+            let has = (role.commands.indexOf(command) !== -1);
+            cb(has);
+            return has;
+        }
 
-            cb(true);
-            return true;
-        }).catch((err) => {
-            console.error(err);
-            return cb(false);
-        });
+        cb(true);
+        return true;
+    }).catch((err) => {
+        console.error(err);
+        return cb(false);
+    });
 }

@@ -8,7 +8,6 @@ var UserSchema = new mongoose.Schema({
     },
     userid:   {
         type:     String,
-        unique:   true,
         required: true
     },
     commands: {

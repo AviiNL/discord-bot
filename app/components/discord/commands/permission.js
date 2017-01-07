@@ -4,35 +4,73 @@ const discord = require('../index');
 const Role = require('../../../models/role');
 const User = require('../../../models/user');
 
+const AsciiTable = require('ascii-table');
+
 module.exports = class extends Command {
 
     run(action, type, name, commands) {
-        if (commands === undefined) {
-            commands = [];
+
+        if(commands) {
+            let cmds = [];
+            if (commands.length > 0) {
+                cmds = commands.split(' ');
+            }
+            commands = cmds;
         } else {
-            commands = commands.split(' ');
+            commands = [];
         }
 
         switch (action) {
             case 'list':
                 User.find({'guildid': this.guild.id}, (err, permissions) => {
                     if (err) {
-                        console.error(err);
+                        return console.error(err);
                     }
-                    if (!permissions) {
-                        console.log("No permissions" || permissions.length === 0);
+
+                    if (!permissions || permissions.length === 0) {
+                        discord.say(this.guild, this.channel, "**No User based permissions found**");
+                        return console.log("No user permissions");
                     }
-                    console.log("User permissions", permissions);
+
+                    let table = new AsciiTable("User Permissions");
+                    table.setHeading("User", "Permissions");
+
+                    for(let i in permissions) {
+                        if(permissions.hasOwnProperty(i)) {
+                            var perm = permissions[i];
+                            table.addRow(
+                                discord.findMemberByID(this.guild, perm.userid).displayName,
+                                perm.commands.length > 0 ? perm.commands.join(', ') : 'ALL'
+                            );
+                        }
+                    }
+
+                    discord.say(this.guild, this.channel, "`" + table + "`");
                 });
 
                 Role.find({'guildid': this.guild.id}, (err, permissions) => {
                     if (err) {
-                        console.error(err);
+                        return console.error(err);
                     }
                     if (!permissions || permissions.length === 0) {
-                        console.log("No permissions");
+                        discord.say(this.guild, this.channel, "**No Role based permissions found**");
+                        return console.log("No role permissions");
                     }
-                    console.log("Roles permissions", permissions);
+
+                    let table = new AsciiTable("Role Permissions");
+                    table.setHeading("Role", "Permissions");
+
+                    for(let i in permissions) {
+                        if(permissions.hasOwnProperty(i)) {
+                            var perm = permissions[i];
+                            table.addRow(
+                                discord.findRoleByID(this.guild, perm.roleid).name,
+                                perm.commands.length > 0 ? perm.commands.join(', ') : 'ALL'
+                            );
+                        }
+                    }
+
+                    discord.say(this.guild, this.channel, "`" + table + "`");
                 });
                 break;
             case 'add':
@@ -54,8 +92,10 @@ module.exports = class extends Command {
 
                             user.save((err) => {
                                 if (err) {
-                                    console.error(err);
+                                    return console.error(err);
                                 }
+
+                                discord.say(this.guild, this.channel, `${member.displayName} has been granted ${commands.join(", ")} permissions`);
                             });
                         });
                     }
@@ -79,8 +119,9 @@ module.exports = class extends Command {
 
                             role.save((err) => {
                                 if (err) {
-                                    console.error(err);
+                                    return console.error(err);
                                 }
+                                discord.say(this.guild, this.channel, `Everyone with the role ${group.name} has been granted ${commands.join(", ")} permissions`);
                             });
                         });
                     }
@@ -101,8 +142,10 @@ module.exports = class extends Command {
 
                             user.remove((err) => {
                                 if (err) {
-                                    console.error(err);
+                                    return console.error(err);
                                 }
+
+                                discord.say(this.guild, this.channel, `Permissions for ${member.displayName} has been revoked`);
                             });
                         });
                     }
@@ -122,8 +165,10 @@ module.exports = class extends Command {
 
                             role.remove((err) => {
                                 if (err) {
-                                    console.error(err);
+                                    return console.error(err);
                                 }
+
+                                discord.say(this.guild, this.channel, `Permissions for ${group.name} has been revoked`);
                             });
                         });
                     }
@@ -132,6 +177,7 @@ module.exports = class extends Command {
             case 'purge':
                 User.remove({guildid: this.guild.id}).exec();
                 Role.remove({guildid: this.guild.id}).exec();
+                discord.say(this.guild, this.channel, "All permissions have been purged");
                 break;
             case 'clean':
                 // remove all user permissions of users that are no longer in this guild
