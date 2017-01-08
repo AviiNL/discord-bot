@@ -20,11 +20,10 @@ class BEManager extends EventEmitter {
                 if (!this.servers.hasOwnProperty(server.guildid)) {
                     this.servers[server.guildid] = [];
                 }
-                let beserver = new BEServer(server.ip, server.port, server.password);
+                let beserver = new BEServer(server);
 
                 beserver.on('message', (message) => {
                     let tmp = server;
-                    delete tmp.password; // dont emit rcon password
                     this.emit('message', tmp, message);
                 });
 
@@ -36,9 +35,9 @@ class BEManager extends EventEmitter {
     get(server) {
 
         var search = (_server) => {
-            if(
+            if (
                 _server.bnode.config.ip === server.ip &&
-                _server.bnode.config.port === server.port &&
+                _server.bnode.config.port === server.rconport &&
                 _server.bnode.config.rconPassword === server.password
             ) {
                 return _server;
@@ -71,7 +70,11 @@ class BEManager extends EventEmitter {
             return false;
         }
 
-        this.servers[server.guildid].push(new BEServer(server.ip, server.port, server.password));
+        if (!this.servers.hasOwnProperty(server.guildid)) {
+            this.servers[server.guildid] = [];
+        }
+
+        this.servers[server.guildid].push(new BEServer(server));
         return true;
     }
 
@@ -83,7 +86,7 @@ class BEManager extends EventEmitter {
 
         s.logout();
         var i = this.servers[server.guildid].indexOf(s);
-        if(i !== -1) {
+        if (i !== -1) {
             this.servers[server.guildid].splice(i, 1);
         }
     }

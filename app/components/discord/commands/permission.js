@@ -45,7 +45,7 @@ module.exports = class extends Command {
                         }
                     }
 
-                    discord.say(this.guild, this.channel, "`" + table + "`");
+                    discord.say(this.guild, this.channel, "```" + table + "```");
                 });
 
                 Role.find({'guildid': this.guild.id}, (err, permissions) => {
@@ -70,7 +70,7 @@ module.exports = class extends Command {
                         }
                     }
 
-                    discord.say(this.guild, this.channel, "`" + table + "`");
+                    discord.say(this.guild, this.channel, "```" + table + "```");
                 });
                 break;
             case 'add':

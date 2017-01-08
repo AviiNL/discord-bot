@@ -10,8 +10,12 @@ var ServerSchema = new mongoose.Schema({
         type:     String,
         required: true,
     },
-    port:     {
-        type:     String,
+    gameport:     {
+        type:     Number,
+        required: true
+    },
+    rconport:     {
+        type:     Number,
         required: true
     },
     password: {
