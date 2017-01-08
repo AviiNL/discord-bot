@@ -8,6 +8,11 @@ const AsciiTable = require('ascii-table');
 
 module.exports = class extends Command {
 
+    constructor(guild, channel, member) {
+        super(guild, channel, member);
+        this.description = "Permission system";
+    }
+
     run(action, type, name, commands) {
 
         if(commands) {
@@ -185,5 +190,12 @@ module.exports = class extends Command {
 
                 break;
         }
+    }
+
+    help() {
+        return 'The permission system enables the administrator to grand users or roles permissions to use commands\n' +
+            '*Usage:* !permission [action:add/remove/list] [what:user/role] [who] [optional:space seperated commands]\n' +
+            '*Example:* !permission add user Test\n' +
+            'If you don\'t supply any commands, all commands will be granted to that user or role.';
     }
 };

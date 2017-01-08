@@ -7,6 +7,11 @@ const BEManager  = require('../../battleye/manager');
 
 module.exports = class extends Command {
 
+    constructor(guild, channel, member) {
+        super(guild, channel, member);
+        this.description = "Server management command";
+    }
+
     run(action, ip, gameport, rconport, password) {
 
         if (ip.indexOf(':') !== -1) {
@@ -113,6 +118,12 @@ module.exports = class extends Command {
             }
         }
 
+    }
+
+    help() {
+        return '!server [action:add/remove/list] [ip[:port| port]] [rconport] [rconpassword]\n' +
+            'All existing servers can be resolved using `ip:port` or `ip port`\n' +
+            'Port specification can either be within the ip with a colon, or space seperated as the next parameter';
     }
 
 };

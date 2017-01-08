@@ -9,6 +9,7 @@
     "discord.js": "^11.0.0",
     "es6-promise": "^4.0.5",
     "gamedig": "^0.2.25",
+    "get-parameter-names": "^0.3.0",
     "keypress": "^0.2.1",
     "mongoose": "^4.7.6",
     "mongoose-unique-validator": "^1.0.3"

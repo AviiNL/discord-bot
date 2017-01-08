@@ -22,7 +22,7 @@ class BEManager extends EventEmitter {
                     this.servers[server.guildid] = [];
                 }
 
-                let beserver = spawn(server);
+                let beserver = spawn(server, self);
 
                 this.servers[server.guildid].push(beserver);
             });
@@ -71,7 +71,7 @@ class BEManager extends EventEmitter {
             this.servers[server.guildid] = [];
         }
 
-        let beserver = spawn(server);
+        let beserver = spawn(server, this);
 
         this.servers[server.guildid].push(beserver);
         return true;
@@ -93,7 +93,7 @@ class BEManager extends EventEmitter {
 }
 
 // Spawn helper function
-function spawn(server) {
+function spawn(server, self) {
     let beserver = new BEServer(server);
 
     beserver.on('message', (message) => {
