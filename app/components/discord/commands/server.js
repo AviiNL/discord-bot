@@ -37,9 +37,8 @@ module.exports = class extends Command {
                         servers.forEach((server) => {
                             let tmpPromise = new Promise((resolve) => {
                                 BEManager.get(server).getInfo((info) => {
-                                    console.log("running addRow");
-                                    table.addRow(server.ip, server.gameport, server.rconport, info.name || 'OFFLINE');
-                                    resolve();
+                                    table.addRow(server.ip, server.gameport, server.rconport, info ? info.name : 'OFFLINE');
+                                    return resolve();
                                 });
                             });
                             promises.push(tmpPromise);

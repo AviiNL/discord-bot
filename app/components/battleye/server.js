@@ -1,6 +1,5 @@
 const EventEmitter = require('events');
 const BattleNode   = require('battle-node');
-const Gamedig      = require('gamedig');
 
 module.exports = class extends EventEmitter {
     constructor(server) {
@@ -48,15 +47,18 @@ module.exports = class extends EventEmitter {
     }
 
     getInfo(cb) {
-        Gamedig.query(
+        delete require.cache[require.resolve('gamedig')];
+        let gamedig = require('gamedig');
+        gamedig.query(
             {
-                type: 'arma3',
-                host: this.ip,
-                port: this.gameport,
+                type:       'arma3',
+                host:       this.ip,
+                port:       this.gameport,
+                udpTimeout: 3000
             },
             function (state) {
-                if (state.error) {
-                    cb(false);
+                if (state.hasOwnProperty('error')) {
+                    return cb(false);
                 }
 
                 cb(state);
