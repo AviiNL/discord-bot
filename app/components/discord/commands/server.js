@@ -121,9 +121,15 @@ module.exports = class extends Command {
     }
 
     help() {
-        return '!server [action:add/remove/list] [ip[:port| port]] [rconport] [rconpassword]\n' +
+        return '!server [action] [ip[:port| port]] [rconport] [rconpassword]\n' +
+            '*Actions:* `list` `add` `remove` `players`\n' +
             'All existing servers can be resolved using `ip:port` or `ip port`\n' +
-            'Port specification can either be within the ip with a colon, or space seperated as the next parameter';
+            'Port specification can either be within the ip with a colon, or space seperated as the next parameter\n' +
+            '`!server list` will show a list of all the servers registered to this discord server\n' +
+            '`!server add localhost:2302 2307 testing` will add the server localhost:2302 to the system\n' +
+            'where the rcon porst is 2307 and the rcon password is testing\n' +
+            '`!server remove localhost:2302` will remove the server\n' +
+            '`!server players localhost:2302` will show the list of players currently on the server';
     }
 
 };

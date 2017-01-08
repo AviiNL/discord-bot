@@ -36,7 +36,7 @@ module.exports = class extends Command {
                 }
             }
 
-            discord.say(this.guild, this.channel, '```' + table + '```\n\n`type: !help [command]` for details about a specific command');
+            discord.say(this.guild, this.channel, '```' + table + '```\n\ntype: `!help [command]` for details about a specific command');
         } else {
             try {
                 let _class = require(__dirname + '/' + command);
