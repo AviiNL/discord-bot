@@ -39,21 +39,20 @@ module.exports = class extends Command {
             discord.say(this.guild, this.channel, '```' + table + '```\n\ntype: `!help [command]` for details about a specific command');
         } else {
             try {
-                let _class = require(__dirname + '/' + command);
-                let load   = new _class(this.guild, this.channel, this.member);
+                let _class      = require(__dirname + '/' + command);
+                let load        = new _class(this.guild, this.channel, this.member);
                 let description = '';
-                let help = '';
+                let help        = '';
                 let params      = getParams(load.run) || [];
                 if (load.description !== undefined) {
                     description = load.description;
                 }
 
-                if(typeof load.help === 'function') {
+                if (typeof load.help === 'function') {
                     help = load.help();
                 }
 
-                discord.say(this.guild, this.channel,`**Command:** ${command}\n**Paramaters:** ${params.join(" ")}\n**Description:** ${description}\n**Info:**\n${help}`);
-
+                discord.say(this.guild, this.channel, `**Command:** ${command}\n**Paramaters:** ${params.join(" ")}\n**Description:** ${description}\n**Info:**\n${help}`);
 
             } catch (e) {
             }
