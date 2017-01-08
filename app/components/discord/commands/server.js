@@ -33,17 +33,19 @@ module.exports = class extends Command {
                         table.setHeading('IP', 'GamePort', 'RconPort', 'Name');
 
                         // Promises....
-                        let p = Promise.resolve(42);
+                        let promises = [];
                         servers.forEach((server) => {
-                            p.then(() => {
+                            let tmpPromise = new Promise((resolve) => {
                                 BEManager.get(server).getInfo((info) => {
                                     console.log("running addRow");
                                     table.addRow(server.ip, server.gameport, server.rconport, info.name || 'OFFLINE');
+                                    resolve();
                                 });
                             });
+                            promises.push(tmpPromise);
                         });
 
-                        p.then(() => {
+                        Promise.all(promises).then(() => {
                             console.log("printing to discord.");
                             discord.say(this.guild, this.channel, '```' + table + '```');
                         });
