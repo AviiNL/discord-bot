@@ -45,7 +45,7 @@ class Bot extends EventEmitter {
     findRole(guild, name) {
         let roles = [];
         guild.roles.forEach((role) => {
-            if(role.name.startsWith(name)) {
+            if(role.name.toLowerCase().startsWith(name.toLowerCase())) {
                 roles.push(role);
             }
         });
@@ -64,7 +64,7 @@ class Bot extends EventEmitter {
     findMember(guild, name) {
         let members = [];
         guild.members.forEach((member) => {
-            if(member.displayName.startsWith(name)) {
+            if(member.displayName.toLowerCase().startsWith(name.toLowerCase())) {
                 members.push(member);
             }
         });

@@ -121,7 +121,7 @@ module.exports = class extends Command {
     }
 
     help() {
-        return '!server [action] [ip[:port| port]] [rconport] [rconpassword]\n' +
+        return 'Usage: `!server [action] [ip[:port| port]] [rconport] [rconpassword]`\n' +
             '*Actions:* `list` `add` `remove` `players`\n' +
             'All existing servers can be resolved using `ip:port` or `ip port`\n' +
             'Port specification can either be within the ip with a colon, or space seperated as the next parameter\n' +
