@@ -7,6 +7,7 @@ class BEManager extends EventEmitter {
     constructor() {
         super();
         this.servers = {};
+        var self = this;
         Server.find({}, (err, servers) => {
             if (err) {
                 return console.error(err);
@@ -20,12 +21,8 @@ class BEManager extends EventEmitter {
                 if (!this.servers.hasOwnProperty(server.guildid)) {
                     this.servers[server.guildid] = [];
                 }
-                let beserver = new BEServer(server);
 
-                beserver.on('message', (message) => {
-                    let tmp = server;
-                    this.emit('message', tmp, message);
-                });
+                let beserver = spawn(server);
 
                 this.servers[server.guildid].push(beserver);
             });
@@ -74,7 +71,9 @@ class BEManager extends EventEmitter {
             this.servers[server.guildid] = [];
         }
 
-        this.servers[server.guildid].push(new BEServer(server));
+        let beserver = spawn(server);
+
+        this.servers[server.guildid].push(beserver);
         return true;
     }
 
@@ -91,6 +90,22 @@ class BEManager extends EventEmitter {
         }
     }
 
+}
+
+// Spawn helper function
+function spawn(server) {
+    let beserver = new BEServer(server);
+
+    beserver.on('message', (message) => {
+        console.log(`${server.ip}:${server.gameport}: ${message}`);
+        self.emit('message', server, message);
+    });
+
+    beserver.on('respawn', () => {
+        spawn(server);
+    });
+
+    return beserver;
 }
 
 // export as singleton

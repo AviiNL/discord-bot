@@ -23,14 +23,14 @@ module.exports = class extends EventEmitter {
             if (this.loggedOut) {
                 timer = setInterval(() => {
                     console.log("Attempting to login again");
-                    this.bnode.login();
+                    this.emit('respawn', this);
                 }, 2500);
             }
         });
 
         this.bnode.on('login', (err, success) => {
             if (!success) {
-                return console.error("Unable to login");
+                return console.error("Unable to login", `${server.ip}:${server.rconport}`);
             }
 
             console.log("RCON Logged in");

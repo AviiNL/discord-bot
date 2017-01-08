@@ -45,7 +45,6 @@ module.exports = class extends Command {
                         });
 
                         Promise.all(promises).then(() => {
-                            console.log("printing to discord.");
                             discord.say(this.guild, this.channel, '```' + table + '```');
                         });
 
