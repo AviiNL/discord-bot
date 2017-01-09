@@ -8,7 +8,10 @@ BEManager.on('message', (server, message) => {
         .exec((err, m) => {
             if(!err && m) {
 
-
+                // todo: Filter messages based on regex if:
+                // Conncected (Verified GUID (**) of Player line
+                // Player #n *** disconnected
+                // () Name: Chat
 
                 discord.say(m.guildid, m.channelid, message);
             }
