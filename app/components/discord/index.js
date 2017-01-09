@@ -30,14 +30,16 @@ class Bot extends EventEmitter {
     }
 
     say(guild, channel, message) {
-        if(typeof guild === 'string') {
+        if (typeof guild === 'string') {
             guild = this.client.guilds.find((_guild) => _guild.id === guild);
         }
-        if(typeof channel === "string") {
-            channel = guild.channels.find((_channel) => _channel.id === channel);
+        if (typeof channel === 'string') {
+            if (guild) {
+                channel = guild.channels.find((_channel) => _channel.id === channel);
+            }
         }
 
-        if (channel) {
+        if (typeof channel !== 'string') {
             channel.sendMessage(message);
         }
     }
@@ -45,7 +47,7 @@ class Bot extends EventEmitter {
     findRole(guild, name) {
         let roles = [];
         guild.roles.forEach((role) => {
-            if(role.name.toLowerCase().startsWith(name.toLowerCase())) {
+            if (role.name.toLowerCase().startsWith(name.toLowerCase())) {
                 roles.push(role);
             }
         });
@@ -64,7 +66,7 @@ class Bot extends EventEmitter {
     findMember(guild, name) {
         let members = [];
         guild.members.forEach((member) => {
-            if(member.displayName.toLowerCase().startsWith(name.toLowerCase())) {
+            if (member.displayName.toLowerCase().startsWith(name.toLowerCase())) {
                 members.push(member);
             }
         });

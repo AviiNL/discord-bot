@@ -7,7 +7,7 @@ class BEManager extends EventEmitter {
     constructor() {
         super();
         this.servers = {};
-        var self = this;
+        var self     = this;
         Server.find({}, (err, servers) => {
             if (err) {
                 return console.error(err);
