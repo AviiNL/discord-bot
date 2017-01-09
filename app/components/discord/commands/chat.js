@@ -79,6 +79,7 @@ module.exports = class extends Command {
 
     help() {
         return '`!chat 127.0.0.1:2302 enable` will enable the ingame chat of the 127.0.0.1:2302 server interaction in the current channel\n' +
-            '`!chat 127.0.0.1:2302 disable` will disable the ingame chat of the 127.0.0.1:2302 server interaction in the current channel';
+            '`!chat 127.0.0.1:2302 disable` will disable the ingame chat of the 127.0.0.1:2302 server interaction in the current channel\n' +
+            'Note: This also includes connected and disconnected events';
     }
 };
