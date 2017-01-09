@@ -41,7 +41,7 @@ module.exports = class extends EventEmitter {
 
         this.bnode.on('message', (message) => {
             // Don't ever send RCon messages
-            if(msg.startsWith("RCon admin #")) { return; }
+            if(message.startsWith("RCon admin #")) { return; }
             this.emit('message', message);
         });
 
