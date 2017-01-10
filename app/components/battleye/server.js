@@ -18,13 +18,11 @@ module.exports = class extends EventEmitter {
 
         var timer;
 
-        this.bnode.on('disconnected', function () {
+        this.bnode.on('disconnected', () => {
             console.log('RCON server disconnected.');
-            if (this.loggedOut) {
-                timer = setInterval(() => {
-                    console.log("Attempting to login again");
-                    this.emit('respawn', this);
-                }, 2500);
+            if (!this.loggedOut) {
+                console.log("Attempting to login again");
+                this.emit('respawn', this);
             }
         });
 

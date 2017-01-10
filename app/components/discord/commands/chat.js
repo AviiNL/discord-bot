@@ -63,6 +63,7 @@ module.exports = class extends Command {
                 m.serverid = server._id;
 
                 m.save();
+                discord.say(this.guild, this.channel, "Chat messages **enabled** in this channel");
             });
     }
 
@@ -74,6 +75,7 @@ module.exports = class extends Command {
                 }
 
                 m.remove();
+                discord.say(this.guild, this.channel, "Chat messages **disabled** in this channel");
             });
     }
 
