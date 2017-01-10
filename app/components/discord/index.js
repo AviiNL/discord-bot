@@ -20,8 +20,8 @@ class Bot extends EventEmitter {
 
             if (message.channel.hasOwnProperty('guild')) {
                 // Channel message
-                let guild   = message.guild.id;
-                let channel = message.channel.id;
+                let guild   = message.guild;
+                let channel = message.channel;
                 this.emit("message", guild, channel, message);
             }
         });

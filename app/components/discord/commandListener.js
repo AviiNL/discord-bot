@@ -26,7 +26,7 @@ discord.on("message", (guild, channel, message) => {
 
         try {
             let func = require('./commands/' + command);
-            let cmd = new func(message.guild, message.channel, message.member);
+            let cmd = new func(guild, channel, message.member);
 
             let last = args.splice(cmd.run.length - 1).join(" ");
 
