@@ -31,7 +31,7 @@ discord.on("message", (guild, channel, message) => {
             }
 
             if (!m) {
-                return console.error("Message data not found!");
+                return;
             }
 
             Server.findOne({_id: m.serverid})
