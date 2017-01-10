@@ -2,7 +2,7 @@ const BEManager = require('./manager');
 const Message   = require('../../models/message');
 const discord   = require('../discord');
 const Server    = require('../../models/server');
-const emoji = require('emojione/lib/js/emojione.js');
+const emoji     = require('emojione/lib/js/emojione.js');
 
 BEManager.on('message', (server, message) => {
 
@@ -26,28 +26,29 @@ discord.on("message", (guild, channel, message) => {
     Message.findOne({guildid: guild.id, channelid: channel.id})
         .exec((merr, m) => {
 
-            if(merr) {
+            if (merr) {
                 return console.log(merr);
             }
 
-            if(!m) {
+            if (!m) {
                 return console.error("Message data not found!");
             }
 
             Server.findOne({_id: m.serverid})
                 .exec((serr, server) => {
 
-                    if(serr) {
+                    if (serr) {
                         return console.log(serr);
                     }
 
-                    if(!server) {
+                    if (!server) {
                         return console.error("Server not found!");
                     }
 
-                    let emojiSuppored = emoji.toShort(message.toString());
-
-                    BEManager.get(server).send(`say -1 [${message.member.displayName}]: ${emojiSuppored}`);
+                    if (message.toString().length > 0) {
+                        let emojiSuppored = emoji.toShort(message.toString());
+                        BEManager.get(server).send(`say -1 [${message.member.displayName}]: ${emojiSuppored}`);
+                    }
                 });
         });
 });

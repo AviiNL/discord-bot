@@ -63,7 +63,7 @@ module.exports = class extends Command {
                 m.serverid = server._id;
 
                 m.save();
-                discord.say(this.guild, this.channel, "Chat messages **enabled** in this channel");
+                discord.say(this.guild, this.channel, `Chat messages **enabled** in this channel for ${server.ip}:${server.gameport}`);
             });
     }
 
@@ -75,7 +75,7 @@ module.exports = class extends Command {
                 }
 
                 m.remove();
-                discord.say(this.guild, this.channel, "Chat messages **disabled** in this channel");
+                discord.say(this.guild, this.channel, `Chat messages **disabled** in this channel ${server.ip}:${server.gameport}`);
             });
     }
 
