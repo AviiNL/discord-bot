@@ -69,7 +69,6 @@ function chat(m, message) {
         case 'global':
         case 'side':
         case 'direct':
-            // direct?
             discord.say(m.guildid, m.channelid, `[${channel}] **${name}**: ${msg}`);
             break;
     }
