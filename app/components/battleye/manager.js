@@ -97,7 +97,7 @@ function spawn(server, self) {
     let beserver = new BEServer(server);
 
     beserver.on('message', (message) => {
-        console.log(`${server.ip}:${server.gameport}: ${message}`);
+        // console.log(`${server.ip}:${server.gameport}: ${message}`);
         self.emit('message', server, message);
     });
 
