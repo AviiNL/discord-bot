@@ -11,7 +11,7 @@
     "es6-promise": "^4.0.5",
     "gamedig": "^0.2.25",
     "get-parameter-names": "^0.3.0",
-    "mongoose": "^4.7.6",
+    "mongoose": "^4.7.6"
   },
   "devDependencies": {},
   "scripts": {
