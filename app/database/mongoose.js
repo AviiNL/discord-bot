@@ -1,5 +1,4 @@
 const mongoose        = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
 
 var MONGO_DB;
 var DOCKER_DB = process.env.DB_PORT;
@@ -21,5 +20,4 @@ var options = {
 
 // Connect to MongoDB
 mongoose.Promise = global.Promise;
-mongoose.plugin(uniqueValidator);
 mongoose.connect(MONGO_DB, options);
