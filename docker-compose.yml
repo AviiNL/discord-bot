@@ -1,7 +1,7 @@
 db:
     image: mongo
     ports:
-      - "27018:27017"
+      - "27017:27017"
     command: "--smallfiles --logpath=/dev/null"
 web:
     build: .
