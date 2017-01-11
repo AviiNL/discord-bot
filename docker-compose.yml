@@ -6,6 +6,6 @@ db:
 web:
     build: .
     command: "cd /myapp/ && node index.js"
-     volumes:
-         - ./app:/myapp
-         - /myapp/node_modules
+    volumes:
+        - ./app:/myapp
+        - /myapp/node_modules
