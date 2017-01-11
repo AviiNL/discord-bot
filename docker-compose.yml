@@ -5,7 +5,9 @@ db:
     command: "--smallfiles --logpath=/dev/null"
 web:
     build: .
-    command: "node index.js"
+    command: "node -v"
     volumes:
         - ./app:/myapp
         - /myapp/node_modules
+    links:
+        - db
