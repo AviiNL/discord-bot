@@ -58,6 +58,7 @@ module.exports = class extends EventEmitter {
             },
             function (state) {
                 if (state.hasOwnProperty('error')) {
+                    console.error(state);
                     return cb(false);
                 }
 
@@ -77,6 +78,7 @@ module.exports = class extends EventEmitter {
 
     logout() {
         this.loggedOut = true;
-        this.bnode.disconnect();
+        // this.bnode.disconnect();
+        this.bnode.socket.close();
     }
-}
+};
