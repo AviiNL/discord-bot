@@ -1,7 +1,5 @@
 const mongoose        = require('mongoose');
 
-console.log(process.env);
-
 var MONGO_DB;
 var DOCKER_DB = process.env.DB_PORT;
 if (DOCKER_DB) {
