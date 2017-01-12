@@ -103,7 +103,7 @@ function spawn(server, self) {
 
     beserver.on('respawn', () => {
         console.log(`Respawn received, restarting server ${server.ip}:${server.gameport}`);
-        spawn(server);
+        spawn(server, self);
     });
 
     return beserver;
