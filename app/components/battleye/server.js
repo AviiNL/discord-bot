@@ -21,8 +21,7 @@ module.exports = class extends EventEmitter {
         this.bnode.on('disconnected', () => {
             console.log('RCON server disconnected.');
             if (!this.loggedOut) {
-                console.log("Attempting to login again");
-                this.emit('respawn', this);
+                this.emit("disconnected", this);
             }
         });
 
@@ -59,7 +58,6 @@ module.exports = class extends EventEmitter {
             },
             function (state) {
                 if (state.hasOwnProperty('error')) {
-                    console.error(state);
                     return cb(false);
                 }
 

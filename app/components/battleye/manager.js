@@ -101,9 +101,20 @@ function spawn(server, self) {
         self.emit('message', server, message);
     });
 
-    beserver.on('respawn', () => {
-        console.log(`Respawn received, restarting server ${server.ip}:${server.gameport}`);
-        spawn(server, self);
+    beserver.on('disconnect', (s) => {
+        console.log(`${s.ip}:${s.port} disconnected, reconnecting in 5 seconds`);
+        let interval = setInterval(() => {
+            console.log(`${s.ip}:${s.port} attempting to reconnect`);
+            s.getInfo((info) => {
+                if(info !== false) {
+                    console.log(`${s.ip}:${s.port} is online, reconnecting`);
+                    clearInterval(interval);
+                    spawn(server, self);
+                } else {
+                    console.log(`${s.ip}:${s.port} still offline, trying again in 5 seconds`);
+                }
+            });
+        }, 5000); // retry every 5 seconds
     });
 
     return beserver;
