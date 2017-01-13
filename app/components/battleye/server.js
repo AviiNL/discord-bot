@@ -4,7 +4,7 @@ const BattleNode   = require('battle-node');
 module.exports = class extends EventEmitter {
     constructor(server) {
         super();
-
+        let self      = this;
         this.ip       = server.ip;
         this.gameport = server.gameport;
 
@@ -28,7 +28,7 @@ module.exports = class extends EventEmitter {
         this.bnode.on('login', (err, success) => {
             if (!success) {
                 return console.error("Unable to login", `${server.ip}:${server.rconport}`);
-                // todo: add a try again n times with timer and maybe a reload command?
+                this.emit("disconnected", self);
             }
 
             console.log("RCON Logged in");
@@ -39,7 +39,9 @@ module.exports = class extends EventEmitter {
 
         this.bnode.on('message', (message) => {
             // Don't ever send RCon messages
-            if(message.startsWith("RCon admin #")) { return; }
+            if (message.startsWith("RCon admin #")) {
+                return;
+            }
             this.emit('message', message);
         });
 
