@@ -106,7 +106,6 @@ function spawn(server, self) {
         s.getInfo((info) => {
             if(info !== false) {
                 console.log(`${s.ip}:${s.gameport} is online, reconnecting`);
-                clearInterval(interval);
                 spawn(server, self);
             } else {
                 console.log(`${s.ip}:${s.gameport} still offline, trying again in 5 seconds`);
