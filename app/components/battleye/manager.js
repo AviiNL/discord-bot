@@ -101,7 +101,7 @@ function spawn(server, self) {
         self.emit('message', server, message);
     });
 
-    beserver.on('disconnect', (s) => {
+    beserver.on('disconnected', (s) => {
         console.log(`${s.ip}:${s.port} disconnected, reconnecting in 5 seconds`);
         let interval = setInterval(() => {
             console.log(`${s.ip}:${s.port} attempting to reconnect`);
