@@ -1,1 +1,0 @@
-// !players command, instead of using !server players
