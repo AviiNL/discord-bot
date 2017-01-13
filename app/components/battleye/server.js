@@ -27,8 +27,9 @@ module.exports = class extends EventEmitter {
 
         this.bnode.on('login', (err, success) => {
             if (!success) {
-                return console.error("Unable to login", `${server.ip}:${server.rconport}`);
                 this.emit("disconnected", self);
+                return console.error("Unable to login", `${server.ip}:${server.rconport}`);
+
             }
 
             console.log("RCON Logged in");
