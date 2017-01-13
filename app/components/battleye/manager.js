@@ -117,7 +117,7 @@ function spawn(server, self) {
 
     beserver.on('disconnected', (s) => {
         console.log(`${s.ip}:${s.gameport} disconnected, reconnecting in 5 seconds`);
-        setTimeout(respawner(s), 5000);
+        setTimeout(() => respawner(s), 5000);
     });
 
     return beserver;
