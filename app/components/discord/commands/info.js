@@ -3,7 +3,6 @@ const Command    = require('../command');
 const Server     = require('../../../models/server');
 const discord    = require('../index');
 const BEManager  = require('../../battleye/manager');
-const dns = require('dns');
 
 module.exports = class extends Command {
 
