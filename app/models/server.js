@@ -26,7 +26,7 @@ var ServerSchema = new mongoose.Schema({
 });
 
 
-ServerSchema.pre('find', function(next, query) {
+ServerSchema.pre('find', function(next) {
     console.log("====== find ======");
     if(this instanceof mongoose.Query) {
 
@@ -36,7 +36,7 @@ ServerSchema.pre('find', function(next, query) {
             // no an ip, resolve dns
         //}
 
-        console.log(query);
+        console.log(this._conditions);
 
         /*
         dns.resolve4(this.ip, (err, result) => {
