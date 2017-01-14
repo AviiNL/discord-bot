@@ -1,6 +1,6 @@
 // Load required packages
 const mongoose = require('mongoose');
-const util = require('util');
+const dns = require('dns');
 
 var ServerSchema = new mongoose.Schema({
     guildid:  {
@@ -26,21 +26,20 @@ var ServerSchema = new mongoose.Schema({
 });
 
 
-ServerSchema.pre('find', function(a) {
+ServerSchema.pre('find', function(next) {
     console.log("====== find ======");
     if(this instanceof mongoose.Query) {
-        console.log(util.inspect(this, { showHidden: true, depth: null }));
-        //console.log(a);
+        console.log(this.ip);
+        /*
+        dns.resolve4(this.ip, (err, result) => {
+            if(!err) {
+                this.ip = result[0];
+            }
+            next();
+        });
+        */
+        next();
     }
 });
-
-ServerSchema.pre('findOne', function(a) {
-    console.log("====== findOne ======");
-    if(this instanceof mongoose.Query) {
-        console.log(util.inspect(this, { showHidden: true, depth: null }));
-        //console.log(a);
-    }
-});
-
 
 module.exports   = mongoose.model('Server', ServerSchema);
