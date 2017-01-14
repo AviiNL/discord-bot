@@ -41,7 +41,11 @@ let dnsResolver =  function(next) {
         }
 
         dns.resolve4(this._conditions.ip, (err, result) => {
-            console.log(result);
+            if(result === undefined) {
+                return next();
+            }
+
+            this._conditions.ip = result[0]; // take first result
             return next();
         });
     }
