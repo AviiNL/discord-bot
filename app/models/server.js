@@ -26,8 +26,7 @@ var ServerSchema = new mongoose.Schema({
 });
 
 
-let dnsResolver =  function(next) {
-    console.log("====== find[One] ======");
+let dnsResolverForFind =  function(next) {
     if(this instanceof mongoose.Query) {
 
         if(Object.keys(this._conditions).length === 0 && this._conditions.constructor === Object) {
@@ -51,8 +50,32 @@ let dnsResolver =  function(next) {
     }
 };
 
+let dnsResolverForSave =  function(next) {
+    if(this instanceof mongoose.Query) {
 
-ServerSchema.pre('find', dnsResolver);
-ServerSchema.pre('findOne', dnsResolver);
+        console.log(this.ip);
+        next();
+
+        let test = /^(?=\d+\.\d+\.\d+\.\d+$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.?){4}$/;
+
+        if(test.test(this.ip)) {
+            return next();
+        }
+
+        dns.resolve4(this.ip, (err, result) => {
+            if(result === undefined) {
+                return next();
+            }
+
+            this.ip = result[0]; // take first result
+            return next();
+        });
+    }
+};
+
+ServerSchema.pre('find', dnsResolverForFind());
+ServerSchema.pre('findOne', dnsResolverForFind());
+
+ServerSchema.pre('save', dnsResolverForSave);
 
 module.exports   = mongoose.model('Server', ServerSchema);
