@@ -51,27 +51,24 @@ let dnsResolverForFind =  function(next) {
 };
 
 let dnsResolverForSave =  function(next) {
-    if(this instanceof mongoose.Query) {
+    let test = /^(?=\d+\.\d+\.\d+\.\d+$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.?){4}$/;
 
-        let test = /^(?=\d+\.\d+\.\d+\.\d+$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.?){4}$/;
+    if(test.test(this.ip)) {
+        return next();
+    }
 
-        if(test.test(this.ip)) {
+    dns.resolve4(this.ip, (err, result) => {
+        if(result === undefined) {
             return next();
         }
 
-        dns.resolve4(this.ip, (err, result) => {
-            if(result === undefined) {
-                return next();
-            }
-
-            this.ip = result[0]; // take first result
-            return next();
-        });
-    }
+        this.ip = result[0]; // take first result
+        return next();
+    });
 };
 
-ServerSchema.pre('find', dnsResolverForFind());
-ServerSchema.pre('findOne', dnsResolverForFind());
+ServerSchema.pre('find', dnsResolverForFind);
+ServerSchema.pre('findOne', dnsResolverForFind);
 
 ServerSchema.pre('save', dnsResolverForSave);
 
