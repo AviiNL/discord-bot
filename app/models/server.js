@@ -39,7 +39,10 @@ let dnsResolverForFind =  function(next) {
             return next();
         }
 
-        console.log(this._conditions.ip);
+        if(!this._conditions.hasOwnProperty('ip')) {
+            return next(); // lets ensure ip is in the query
+        }
+
         dns.resolve4(this._conditions.ip, (err, result) => {
             if(result === undefined) {
                 return next();
