@@ -29,7 +29,7 @@ var ServerSchema = new mongoose.Schema({
 ServerSchema.pre('find', function(next) {
     console.log("====== find ======");
     if(this instanceof mongoose.Query) {
-        console.log(this.ip);
+        console.log(this.query.ip);
 
         /*
         dns.resolve4(this.ip, (err, result) => {
