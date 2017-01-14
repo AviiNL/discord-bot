@@ -35,7 +35,7 @@ module.exports = class extends Command {
                             let name = info.name;
                             let host = info.query.address + ':' + info.query.port;
                             let mission = info.raw.game;
-                            let maxplayers = info.raw.maxplayers;
+                            let maxplayers = info.maxplayers;
                             let numplayers = info.raw.numplayers;
 
                             let output = `Server: **${host}**\n` +
