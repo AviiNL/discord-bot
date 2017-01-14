@@ -31,7 +31,19 @@ module.exports = class extends Command {
                 if (false !== (beserver = BEManager.get(server))) {
                     beserver.getInfo((info) => {
                         if(info) {
-                            console.log(info);
+
+                            let name = info.name;
+                            let host = info.query.address + ':' + info.query.port;
+                            let mission = info.raw.game;
+                            let maxplayers = info.raw.maxplayers;
+                            let numplayers = info.raw.numplayers;
+
+                            let output = `Server: **${host}**` +
+                                `Name: **${name}\n` +
+                                `Mission: **${mission}**\n` +
+                                `Players: ${numplayers}/${maxplayers}`;
+
+                            discord.say(this.guild, this.channel, output);
                         }
                     });
                 }
