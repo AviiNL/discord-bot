@@ -38,7 +38,7 @@ module.exports = class extends Command {
                             let maxplayers = info.raw.maxplayers;
                             let numplayers = info.raw.numplayers;
 
-                            let output = `Server: **${host}**` +
+                            let output = `Server: **${host}**\n` +
                                 `Name: **${name}\n` +
                                 `Mission: **${mission}**\n` +
                                 `Players: ${numplayers}/${maxplayers}`;
