@@ -39,6 +39,7 @@ let dnsResolverForFind =  function(next) {
             return next();
         }
 
+        console.log(this._conditions.ip);
         dns.resolve4(this._conditions.ip, (err, result) => {
             if(result === undefined) {
                 return next();
