@@ -26,10 +26,17 @@ var ServerSchema = new mongoose.Schema({
 });
 
 
-ServerSchema.pre('find', function(next) {
+ServerSchema.pre(['find', 'findOne'], function(next, query) {
     console.log("====== find ======");
     if(this instanceof mongoose.Query) {
-        console.log(this.query.ip);
+
+        let test = /^(?=\d+\.\d+\.\d+\.\d+$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.?){4}$/;
+
+        //if(!test.test(ip)) {
+            // no an ip, resolve dns
+        //}
+
+        console.log(query);
 
         /*
         dns.resolve4(this.ip, (err, result) => {
