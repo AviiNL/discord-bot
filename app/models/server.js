@@ -23,4 +23,15 @@ var ServerSchema = new mongoose.Schema({
         required: true
     }
 });
+
+
+ServerSchema.pre('find', function(a) {
+    if(this instanceof mongoose.Query) {
+        console.log(this);
+        console.log(a);
+    }
+});
+
+
+
 module.exports   = mongoose.model('Server', ServerSchema);
