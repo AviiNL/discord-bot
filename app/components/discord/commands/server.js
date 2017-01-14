@@ -82,7 +82,7 @@ module.exports = class extends Command {
                     });
                 break;
             case 'remove':
-                Server.findOneAndRemove({guildid: this.guild.id, ip: ip, gameport: gameport})
+                Server.findOne({guildid: this.guild.id, ip: ip, gameport: gameport})
                     .exec((err, server) => {
                         if (err) {
                             return console.error(err);
@@ -94,6 +94,7 @@ module.exports = class extends Command {
 
                         discord.say(this.guild, this.channel, `${server.ip}:${server.gameport} successfully removed`);
                         BEManager.remove(server);
+                        server.remove();
                     });
                 break;
         }
