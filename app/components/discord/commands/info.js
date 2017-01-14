@@ -41,7 +41,7 @@ module.exports = class extends Command {
                             let output = `Server: **${host}**\n` +
                                 `Name: **${name}**\n` +
                                 `Mission: **${mission}**\n` +
-                                `Players: ${numplayers}/${maxplayers}`;
+                                `Players: **${numplayers}/${maxplayers}**`;
 
                             discord.say(this.guild, this.channel, output);
                         }
