@@ -36,7 +36,10 @@ module.exports = class extends Command {
                 }
             }
 
-            discord.say(this.guild, this.channel, '```' + table + '```\n\ntype: `!help [command]` for details about a specific command');
+            discord.say(this.guild, this.channel, '```' + table + '```\n\ntype: `!help [command]` for details about a specific command\n' +
+                'Anywhere where ip and port is specified can be written in the following way:\n' +
+                '`127.0.0.1 2302` or `127.0.0.1:2302` mind the space and colon, both work\n' +
+                'hostnames are also supported: `localhost` will be translated to `127.0.0.1` automatically');
         } else {
             try {
                 let _class      = require(__dirname + '/' + command);
