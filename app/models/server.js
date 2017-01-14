@@ -26,7 +26,7 @@ var ServerSchema = new mongoose.Schema({
 });
 
 
-ServerSchema.pre(['find', 'findOne'], function(next, query) {
+ServerSchema.pre('find', function(next, query) {
     console.log("====== find ======");
     if(this instanceof mongoose.Query) {
 
