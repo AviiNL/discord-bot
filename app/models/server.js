@@ -30,6 +30,10 @@ let dnsResolver =  function(next) {
     console.log("====== find[One] ======");
     if(this instanceof mongoose.Query) {
 
+        if(Object.keys(this._conditions).length === 0 && this._conditions.constructor === Object) {
+            next();
+        }
+
         let test = /^(?=\d+\.\d+\.\d+\.\d+$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.?){4}$/;
 
         if(test.test(this._conditions.ip)) {
