@@ -32,6 +32,8 @@ module.exports = class extends Command {
                     beserver.send('players', (players) => {
                         return discord.say(this.guild, this.channel, '```' + players + '```');
                     });
+                } else {
+                    return discord.say(this.guild, this.channel, `Server ${ip}:${gameport} not connected`);
                 }
             });
 
